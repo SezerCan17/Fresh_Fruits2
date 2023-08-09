@@ -5,9 +5,15 @@ using UnityEngine;
 public class Camera : MonoBehaviour
 {
 	public Transform target;
-	public Transform rightTarget; 
+	public Transform rightTarget;
+	public Transform centerTarget;
+	public Transform leftTarget;
 	public float movementTime = 1;
 	public float rotationSpeed = 0.1f;
+
+	bool atRight;
+	bool atCenter = true;
+	bool atLeft;
 
 	Vector3 refPos;
 	Vector3 refRot;
@@ -24,7 +30,35 @@ public class Camera : MonoBehaviour
 
 	public void RightLook()
     {
-		target = rightTarget;
+		if(atCenter)
+        {
+			target = rightTarget;
+			atCenter = false;
+			atRight = true;
+		}
+		if(atLeft)
+        {
+			target = centerTarget;
+			atLeft = false;
+			atCenter = true;
+        }
+		
     }
+
+	public void LeftLook()
+    {
+		if (atCenter)
+		{
+			target = leftTarget;
+			atCenter = false;
+			atLeft = true;
+		}
+		if (atRight)
+		{
+			target = centerTarget;
+			atRight = false;
+			atCenter = true;
+		}
+	}
 }
 
